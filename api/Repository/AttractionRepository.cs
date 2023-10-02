@@ -26,15 +26,15 @@ namespace api.Repository
         {
             return await _context.Attractions.Where(x => x.Name.ToLower().Contains(search)).Skip((page - 1) * total).Take(total).ToListAsync();
         }
-        public async Task<Attractions> Store(Attractions attraction)
+        public async Task<Attractions> Create(Attractions attraction)
         {
             _context.Attractions.Add(attraction);
             await _context.SaveChangesAsync();
             return attraction;
         }
-        public async Task<Attractions> Update(Attractions attraction, int id)
+        public async Task<Attractions> Update(Attractions attractionData, int id)
         {
-            var attractionData = await GetById(id);
+            var attraction = await GetById(id);
             if (attractionData != null)
             {
                 attraction.Name = attractionData.Name;

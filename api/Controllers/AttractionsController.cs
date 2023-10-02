@@ -36,13 +36,13 @@ namespace api.Controllers
 
         [HttpPost]
         [Route("attractions")]
-        public async Task<ActionResult<Attractions>> Store([FromBody] Attractions attraction)
+        public async Task<ActionResult<Attractions>> Create([FromBody] Attractions attraction)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var newAttraction = await _attractionRepository.Store(attraction);
+            var newAttraction = await _attractionRepository.Create(attraction);
             return Ok(newAttraction);
         }
 

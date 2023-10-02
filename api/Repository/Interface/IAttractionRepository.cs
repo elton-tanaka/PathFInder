@@ -7,7 +7,7 @@ namespace api.Repository.Interface
         Task<List<Attractions>> GetAll(int page, int total);
         Task<Attractions> GetById(int id);
         Task<List<Attractions>> Search(string search, int page, int total);
-        Task<Attractions> Store(Attractions attraction);
+        Task<Attractions> Create(Attractions attraction);
         Task<Attractions> Update(Attractions attraction, int id);
         Task<bool> Delete(int id);
     }
