@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Attractions from "../components/AttractionCard";
+import AttractionsList from "../components/AttractionsList";
 
 const Home = () => {
   const [search, setSearch] = useState("");
@@ -11,7 +11,7 @@ const Home = () => {
           <h1>Welcome to Pathfinder!</h1>
         </div>
       </div>
-      <Attractions search={search} />
+      <AttractionsList search={search} />
     </div>
   );
 };

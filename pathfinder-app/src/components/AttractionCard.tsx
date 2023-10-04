@@ -1,11 +1,12 @@
-import React from "react";
-import { Attraction } from "../Interfaces/AttractionsInterface.ts";
+import { useEffect, useState } from "react";
+import { IAttraction } from "../Interfaces/AttractionsInterface.ts";
+import { api } from "../services/api";
 
 const AttractionCard = ({
   attraction,
   selectAttraction,
 }: {
-  attraction: Attraction;
+  attraction: IAttraction;
   selectAttraction: () => void;
 }) => {
   return (
