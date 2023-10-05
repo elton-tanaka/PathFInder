@@ -4,11 +4,20 @@ import { IAttraction } from "../Interfaces/AttractionsInterface";
 import AttractionCard from "./AttractionCard";
 import AttractionModal from "./AttractionModal";
 
-const AttractionList = () => {
+type AttractionListProps = {
+  searchInput: string;
+  isSearching: boolean;
+};
+
+const AttractionList: React.FC<AttractionListProps> = (
+  searchInput,
+  isSearching
+) => {
   const [loading, setLoading] = useState(true);
   const [attractions, setAttractions] = useState<IAttraction[]>([]);
   const [selectedAttraction, setSelectedAttraction] = useState<IAttraction>();
   const [openModal, setOpenModal] = useState(false);
+  const [page, setPage] = useState(0);
 
   const getAttractions = async () => {
     try {
@@ -22,9 +31,32 @@ const AttractionList = () => {
     }
   };
 
+  const searchAttractions = async () => {
+    try {
+      setLoading(true);
+      const response = await api.get(`attractions/search`, {
+        params: {
+          search: searchInput,
+          page: page,
+          total: 4,
+        },
+      });
+
+      setLoading(false);
+      setAttractions(response.data);
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
-    getAttractions();
-  }, []);
+    if (isSearching) {
+      searchAttractions();
+    } else {
+      getAttractions();
+    }
+  }, [isSearching, page]);
 
   const closeModal = () => {
     setOpenModal(false);

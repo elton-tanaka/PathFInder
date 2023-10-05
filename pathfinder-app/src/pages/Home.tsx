@@ -3,17 +3,22 @@ import AttractionsList from "../components/AttractionsList";
 import Header from "../components/Header";
 
 const Home = () => {
-  const [search, setSearch] = useState("");
+  const [searchInput, setSearchInput] = useState("");
+  const [isSearching, setIsSearching] = useState<boolean>(false);
 
   return (
     <div>
-      <Header />
+      <Header
+        setSearchInput={setSearchInput}
+        setIsSearching={setIsSearching}
+        isSearching={isSearching}
+      />
       <div className="row">
         <div className="col-12">
           <h1>Welcome to Pathfinder!</h1>
         </div>
       </div>
-      <AttractionsList search={search} />
+      <AttractionsList searchInput={searchInput} isSearching={isSearching} />
     </div>
   );
 };

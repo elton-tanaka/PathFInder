@@ -1,6 +1,17 @@
 import { Link } from "react-router-dom";
+import { Dispatch, SetStateAction } from "react";
 
-const Header = () => {
+type HeaderProps = {
+  setSearchInput: Dispatch<SetStateAction<string>>;
+  setIsSearching: Dispatch<SetStateAction<boolean>>;
+  isSearching: boolean;
+};
+
+const Header: React.FC<HeaderProps> = ({
+  setSearchInput,
+  setIsSearching,
+  isSearching,
+}) => {
   return (
     <main>
       <header className="p-3 text-bg-dark">
@@ -46,9 +57,16 @@ const Header = () => {
                 className="form-control form-control-dark text-bg-dark"
                 placeholder="Search..."
                 aria-label="Search"
+                onChange={(e) => {
+                  setSearchInput(e.target.value);
+                }}
               ></input>
             </form>
-            <button type="button" className="btn btn-outline-light me-2">
+            <button
+              type="button"
+              className="btn btn-outline-light me-2"
+              onClick={() => setIsSearching(true)}
+            >
               Search
             </button>
           </div>
