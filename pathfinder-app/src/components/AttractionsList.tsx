@@ -11,14 +11,18 @@ const AttractionList = () => {
   const getAttractions = async () => {
     try {
       setLoading(true);
-      const response = await api.get<IAttraction[]>("attractions");
+      const res = await api.get("attractions");
       setLoading(false);
-      setAttractions(response.data);
+      setAttractions(res.data);
     } catch (error) {
       setLoading(false);
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    getAttractions();
+  }, []);
 
   return (
     <div>
@@ -31,7 +35,9 @@ const AttractionList = () => {
             <AttractionCard
               key={attraction.id}
               attraction={attraction}
-              selectAttraction={() => selectAttraction(attraction)}
+              selectAttraction={() => {
+                setSelectedAttraction(attraction);
+              }}
             />
           ))
         )}
