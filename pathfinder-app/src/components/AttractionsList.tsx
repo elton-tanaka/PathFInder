@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { api } from "../services/api";
 import { IAttraction } from "../Interfaces/AttractionsInterface";
 import AttractionCard from "./AttractionCard";
+import AttractionModal from "./AttractionModal";
 
 const AttractionList = () => {
   const [loading, setLoading] = useState(true);
   const [attractions, setAttractions] = useState<IAttraction[]>([]);
   const [selectedAttraction, setSelectedAttraction] = useState<IAttraction>();
+  const [openModal, setOpenModal] = useState(false);
 
   const getAttractions = async () => {
     try {
@@ -37,11 +39,19 @@ const AttractionList = () => {
               attraction={attraction}
               selectAttraction={() => {
                 setSelectedAttraction(attraction);
+                setOpenModal(true);
               }}
             />
           ))
         )}
       </ul>
+      {openModal && selectedAttraction && (
+        <AttractionModal
+          isOpen={openModal}
+          onClose={() => setOpenModal(false)}
+          attraction={selectedAttraction}
+        />
+      )}
     </div>
   );
 };
