@@ -25,6 +25,10 @@ const AttractionModal: React.FC<AttractionModalProps> = ({
     setDescription(event.target.value);
   };
 
+  const handleDeleteAttraction = () => {
+    onClose();
+  };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // Handle form submission here
@@ -98,7 +102,11 @@ const AttractionModal: React.FC<AttractionModalProps> = ({
           >
             Edit
           </button>
-          <button type="button" className="w-100 btn btn-lg btn-primary">
+          <button
+            type="button"
+            className="w-100 btn btn-lg btn-primary"
+            onClick={handleDeleteAttraction}
+          >
             Delete
           </button>
         </div>

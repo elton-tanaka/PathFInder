@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { api } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import { ICreateAttraction } from "../Interfaces/AttractionsInterface";
+import Header from "../components/Header";
 
 const Create = () => {
   const [name, setName] = useState("");
@@ -44,12 +45,20 @@ const Create = () => {
       city: city,
       state: state,
     };
-    await api.post("attractions", newAttraction);
+    await api
+      .post("attractions", newAttraction)
+      .then((response) => {
+        console.log("created new attraction: " + response.data);
+      })
+      .catch((error) => {
+        console.log("error has occured when creating an attraction: " + error);
+      });
     navigate("/");
   };
 
   return (
     <div>
+      <Header />
       <h2>Create Attraction</h2>
       <form onSubmit={handleSubmit}>
         <label>

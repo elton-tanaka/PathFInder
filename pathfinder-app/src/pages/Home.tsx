@@ -1,11 +1,13 @@
 import { useState } from "react";
 import AttractionsList from "../components/AttractionsList";
+import Header from "../components/Header";
 
 const Home = () => {
   const [search, setSearch] = useState("");
 
   return (
-    <div className="container">
+    <div>
+      <Header />
       <div className="row">
         <div className="col-12">
           <h1>Welcome to Pathfinder!</h1>

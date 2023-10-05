@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Header = () => {
   return (
     <main>
@@ -24,11 +26,23 @@ const Header = () => {
                 <a href="/" className="nav-link px-2 text-white">
                   Home
                 </a>
+                <Link
+                  to={"/"}
+                  className="bg-cyan-600 py-4 px-16 rounded-md text-white hover:bg-cyan-700 duration-300 cursor-pointer"
+                >
+                  Home
+                </Link>
               </li>
               <li>
                 <a href="/Create" className="nav-link px-2 text-white">
                   Register attraction
                 </a>
+                <Link
+                  to={"/Create"}
+                  className="bg-cyan-600 py-4 px-16 rounded-md text-white hover:bg-cyan-700 duration-300 cursor-pointer"
+                >
+                  Register attraction
+                </Link>
               </li>
             </ul>
 
