@@ -23,23 +23,14 @@ const Header = () => {
 
             <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
               <li>
-                <a href="/" className="nav-link px-2 text-white">
-                  Home
-                </a>
-                <Link
-                  to={"/"}
-                  className="bg-cyan-600 py-4 px-16 rounded-md text-white hover:bg-cyan-700 duration-300 cursor-pointer"
-                >
-                  Home
+                <Link to={"/"} className="nav-link px-2 text-white">
+                  <li>Home</li>
                 </Link>
               </li>
               <li>
-                <a href="/Create" className="nav-link px-2 text-white">
-                  Register attraction
-                </a>
                 <Link
                   to={"/Create"}
-                  className="bg-cyan-600 py-4 px-16 rounded-md text-white hover:bg-cyan-700 duration-300 cursor-pointer"
+                  className=" nav-link px-2 text-white hover:bg-cyan-700 duration-300 cursor-pointer"
                 >
                   Register attraction
                 </Link>

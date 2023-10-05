@@ -26,6 +26,11 @@ const AttractionList = () => {
     getAttractions();
   }, []);
 
+  const closeModal = () => {
+    setOpenModal(false);
+    getAttractions();
+  };
+
   return (
     <div>
       <h2>Attractions</h2>
@@ -48,7 +53,10 @@ const AttractionList = () => {
       {openModal && selectedAttraction && (
         <AttractionModal
           isOpen={openModal}
-          onClose={() => setOpenModal(false)}
+          closeModal={() => closeModal()}
+          onClose={() => {
+            setOpenModal(false);
+          }}
           attraction={selectedAttraction}
         />
       )}
