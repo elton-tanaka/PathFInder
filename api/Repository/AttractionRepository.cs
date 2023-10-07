@@ -14,17 +14,24 @@ namespace api.Repository
             _context = context;
         }
         
-        public async Task<List<Attractions>> GetAll(int page, int total)
+        public async Task<List<Attractions>> GetAll()
         {
-            return await _context.Attractions.Skip((page - 1) * total).Take(total).ToListAsync();
+            return await _context.Attractions.OrderByDescending(x => x.Id).ToListAsync();
         }
         public async Task<Attractions> GetById(int id)
         {
             return await _context.Attractions.FirstOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Ponto turístico não encontrado.");
         }
-        public async Task<List<Attractions>> Search(string search, int page, int total)
+        public async Task<List<Attractions>> Search(string search)
         {
-            return await _context.Attractions.Where(x => x.Name.ToLower().Contains(search)).Skip((page - 1) * total).Take(total).ToListAsync();
+            return await _context.Attractions.Where(x => 
+                x.Name.ToLower().Contains(search) || 
+                x.City.ToLower().Contains(search) ||
+                x.State.ToLower().Contains(search) ||
+                x.Description.ToLower().Contains(search) ||
+                x.Location.ToLower().Contains(search)
+            )
+            .ToListAsync();
         }
         public async Task<Attractions> Create(Attractions attraction)
         {

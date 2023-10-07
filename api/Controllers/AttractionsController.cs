@@ -20,9 +20,9 @@ namespace api.Controllers
 
         [HttpGet]
         [Route("attractions")]
-        public async Task<ActionResult<List<Attractions>>> GetAll([FromQuery] int page = 1, [FromQuery] int total = 10)
+        public async Task<ActionResult<List<Attractions>>> GetAll()
         {
-            var attractions = await _attractionRepository.GetAll(page, total);
+            var attractions = await _attractionRepository.GetAll();
             return Ok(attractions);
         }
 
@@ -68,9 +68,9 @@ namespace api.Controllers
 
         [HttpGet]
         [Route("attractions/search")]
-        public async Task<ActionResult<List<Attractions>>> Search([FromQuery] string search, [FromQuery] int page = 1, [FromQuery] int total = 10)
+        public async Task<ActionResult<List<Attractions>>> Search([FromQuery] string search)
         {
-            var attractions = await _attractionRepository.Search(search, page, total);
+            var attractions = await _attractionRepository.Search(search);
             return Ok(attractions);
         }
 
