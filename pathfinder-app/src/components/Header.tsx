@@ -49,19 +49,13 @@ const Header: React.FC<HeaderProps> = ({
                 </Link>
               </li>
             </ul>
-
-            <form
-              className="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3"
-              role="search"
-            >
-              <input
-                type="search"
-                className="form-control form-control-dark text-bg-dark"
-                placeholder="Search..."
-                aria-label="Search"
-                onChange={(e) => setSearchInput(e.target.value)}
-              ></input>
-            </form>
+            <input
+              type="search"
+              className="form-control form-control-dark text-bg-dark"
+              placeholder="Search..."
+              aria-label="Search"
+              onChange={(e) => setSearchInput(e.target.value)}
+            ></input>
             <button
               type="button"
               className="btn btn-outline-light me-2"
