@@ -51,11 +51,9 @@ const AttractionList: React.FC<AttractionListProps> = ({
 
   useEffect(() => {
     if (searchInput.length > 0) {
-      console.log("searching...");
       searchAttractions();
     } else {
       getAttractions();
-      console.log("normal ass");
     }
   }, [isSearching]);
 
