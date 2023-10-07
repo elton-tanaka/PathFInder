@@ -81,16 +81,26 @@ const AttractionList: React.FC<AttractionListProps> = ({
           <p>Loading...</p>
         ) : (
           <div>
-            {currentAttractions.map((attraction) => (
-              <AttractionCard
-                key={attraction.id}
-                attraction={attraction}
-                selectAttraction={() => {
-                  setSelectedAttraction(attraction);
-                  setOpenModal(true);
-                }}
-              />
-            ))}
+            <div
+              className="container py-3"
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              {currentAttractions.map((attraction) => (
+                <AttractionCard
+                  key={attraction.id}
+                  attraction={attraction}
+                  selectAttraction={() => {
+                    setSelectedAttraction(attraction);
+                    setOpenModal(true);
+                  }}
+                />
+              ))}
+            </div>
             <Pagination
               attractionsPerPage={attractionsPerPage}
               totalAttractions={attractions.length}

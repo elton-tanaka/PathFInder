@@ -19,7 +19,14 @@ const Home = () => {
           <h1>Welcome to Pathfinder!</h1>
         </div>
       </div>
-      <AttractionsList searchInput={searchInput} isSearching={isSearching} />
+      <div>
+        <div className="row row-cols-1 row-cols-md-1 mb-3 text-center">
+          <AttractionsList
+            searchInput={searchInput}
+            isSearching={isSearching}
+          />
+        </div>
+      </div>
     </div>
   );
 };

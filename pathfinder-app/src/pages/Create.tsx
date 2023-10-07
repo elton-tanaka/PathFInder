@@ -56,41 +56,69 @@ const Create = () => {
     navigate("/");
   };
 
+  const [searchInput, setSearchInput] = useState("");
+  const [isSearching, setIsSearching] = useState<boolean>(false);
+
   return (
     <div>
-      <Header />
-      <h2>Create Attraction</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name:
-          <input type="text" value={name} onChange={handleNameChange} />
-        </label>
-        <br />
-        <label>
-          Description:
-          <textarea
-            value={description}
-            onChange={handleDescriptionChange}
-          ></textarea>
-        </label>
-        <br />
-        <label>
-          Location:
-          <textarea value={location} onChange={handleLocationChange}></textarea>
-        </label>
-        <br />
-        <label>
-          City:
-          <textarea value={city} onChange={handleCityChange}></textarea>
-        </label>
-        <br />
-        <label>
-          State:
-          <textarea value={state} onChange={handleStateChange}></textarea>
-        </label>
-        <br />
-        <input type="submit" value="Submit" />
-      </form>
+      <Header
+        setSearchInput={setSearchInput}
+        searchInput={searchInput}
+        setIsSearching={setIsSearching}
+        isSearching={isSearching}
+      />
+      <div className="container-md">
+        <h2>Create Attraction</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label className="form-label">Name: </label>
+            <input
+              className="form-controll"
+              type="text"
+              value={name}
+              onChange={handleNameChange}
+            />
+          </div>
+          <br />
+          <div className="mb-3">
+            <label className="form-label">Description:</label>
+            <textarea
+              className="form-controll"
+              value={description}
+              onChange={handleDescriptionChange}
+            ></textarea>
+          </div>
+          <br />
+          <div className="mb-3">
+            <label className="form-label">Location:</label>
+            <textarea
+              className="form-controll"
+              value={location}
+              onChange={handleLocationChange}
+            ></textarea>
+          </div>
+          <br />
+          <div className="mb-3">
+            <label className="form-label">City:</label>
+            <textarea
+              className="form-controll"
+              value={city}
+              onChange={handleCityChange}
+            ></textarea>
+          </div>
+          <br />
+          <div className="mb-3">
+            <label className="form-label">State:</label>
+            <textarea
+              className="form-controll"
+              value={state}
+              onChange={handleStateChange}
+            ></textarea>
+          </div>
+          <br />
+          <input className="btn btn-primary" type="submit" value="Submit" />
+        </form>
+      </div>
     </div>
   );
 };

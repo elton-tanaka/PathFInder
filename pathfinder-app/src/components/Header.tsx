@@ -10,7 +10,6 @@ type HeaderProps = {
 
 const Header: React.FC<HeaderProps> = ({
   setSearchInput,
-  searchInput,
   setIsSearching,
   isSearching,
 }) => {
@@ -49,20 +48,22 @@ const Header: React.FC<HeaderProps> = ({
                 </Link>
               </li>
             </ul>
-            <input
-              type="search"
-              className="form-control form-control-dark text-bg-dark"
-              placeholder="Search..."
-              aria-label="Search"
-              onChange={(e) => setSearchInput(e.target.value)}
-            ></input>
-            <button
-              type="button"
-              className="btn btn-outline-light me-2"
-              onClick={() => setIsSearching(!isSearching)}
-            >
-              Search
-            </button>
+            <div className="d-flex">
+              <input
+                type="search"
+                className="form-control form-control-dark text-bg-dark"
+                placeholder="Search..."
+                aria-label="Search"
+                onChange={(e) => setSearchInput(e.target.value)}
+              ></input>
+              <button
+                type="button"
+                className="btn btn-outline-light me-2"
+                onClick={() => setIsSearching(!isSearching)}
+              >
+                Search
+              </button>
+            </div>
           </div>
         </div>
       </header>
