@@ -3,6 +3,7 @@ import { api } from "../services/api";
 import { IAttraction } from "../Interfaces/AttractionsInterface";
 import AttractionCard from "./AttractionCard";
 import AttractionModal from "./AttractionModal";
+import Pagination from "./Pagination";
 
 type AttractionListProps = {
   searchInput: string;
@@ -17,7 +18,8 @@ const AttractionList: React.FC<AttractionListProps> = ({
   const [attractions, setAttractions] = useState<IAttraction[]>([]);
   const [selectedAttraction, setSelectedAttraction] = useState<IAttraction>();
   const [openModal, setOpenModal] = useState(false);
-  const [page, setPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [attractionsPerPage] = useState(4);
 
   const getAttractions = async () => {
     try {
@@ -37,11 +39,8 @@ const AttractionList: React.FC<AttractionListProps> = ({
       const response = await api.get(`attractions/search?`, {
         params: {
           search: searchInput,
-          page: page,
-          total: 4,
         },
       });
-
       setLoading(false);
       setAttractions(response.data);
     } catch (error) {
@@ -58,12 +57,21 @@ const AttractionList: React.FC<AttractionListProps> = ({
       getAttractions();
       console.log("normal ass");
     }
-  }, [isSearching, page]);
+  }, [isSearching]);
 
   const closeModal = () => {
     setOpenModal(false);
     getAttractions();
   };
+
+  const indexOfLastAttraction = currentPage * attractionsPerPage;
+  const indexOfFirstAttraction = indexOfLastAttraction - attractionsPerPage;
+  const currentAttractions = attractions.slice(
+    indexOfFirstAttraction,
+    indexOfLastAttraction
+  );
+
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
     <div>
@@ -72,16 +80,23 @@ const AttractionList: React.FC<AttractionListProps> = ({
         {loading ? (
           <p>Loading...</p>
         ) : (
-          attractions.map((attraction) => (
-            <AttractionCard
-              key={attraction.id}
-              attraction={attraction}
-              selectAttraction={() => {
-                setSelectedAttraction(attraction);
-                setOpenModal(true);
-              }}
+          <div>
+            {currentAttractions.map((attraction) => (
+              <AttractionCard
+                key={attraction.id}
+                attraction={attraction}
+                selectAttraction={() => {
+                  setSelectedAttraction(attraction);
+                  setOpenModal(true);
+                }}
+              />
+            ))}
+            <Pagination
+              attractionsPerPage={attractionsPerPage}
+              totalAttractions={attractions.length}
+              paginate={paginate}
             />
-          ))
+          </div>
         )}
       </ul>
       {openModal && selectedAttraction && (
