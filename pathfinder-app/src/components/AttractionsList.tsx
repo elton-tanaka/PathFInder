@@ -9,10 +9,10 @@ type AttractionListProps = {
   isSearching: boolean;
 };
 
-const AttractionList: React.FC<AttractionListProps> = (
+const AttractionList: React.FC<AttractionListProps> = ({
   searchInput,
-  isSearching
-) => {
+  isSearching,
+}) => {
   const [loading, setLoading] = useState(true);
   const [attractions, setAttractions] = useState<IAttraction[]>([]);
   const [selectedAttraction, setSelectedAttraction] = useState<IAttraction>();
@@ -34,7 +34,7 @@ const AttractionList: React.FC<AttractionListProps> = (
   const searchAttractions = async () => {
     try {
       setLoading(true);
-      const response = await api.get(`attractions/search`, {
+      const response = await api.get(`attractions/search?`, {
         params: {
           search: searchInput,
           page: page,
@@ -51,10 +51,12 @@ const AttractionList: React.FC<AttractionListProps> = (
   };
 
   useEffect(() => {
-    if (isSearching) {
+    if (searchInput.length > 0) {
+      console.log("searching...");
       searchAttractions();
     } else {
       getAttractions();
+      console.log("normal ass");
     }
   }, [isSearching, page]);
 

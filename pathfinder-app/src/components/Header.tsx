@@ -3,12 +3,14 @@ import { Dispatch, SetStateAction } from "react";
 
 type HeaderProps = {
   setSearchInput: Dispatch<SetStateAction<string>>;
+  searchInput: string;
   setIsSearching: Dispatch<SetStateAction<boolean>>;
   isSearching: boolean;
 };
 
 const Header: React.FC<HeaderProps> = ({
   setSearchInput,
+  searchInput,
   setIsSearching,
   isSearching,
 }) => {
@@ -35,7 +37,7 @@ const Header: React.FC<HeaderProps> = ({
             <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
               <li>
                 <Link to={"/"} className="nav-link px-2 text-white">
-                  <li>Home</li>
+                  Home
                 </Link>
               </li>
               <li>
@@ -57,15 +59,13 @@ const Header: React.FC<HeaderProps> = ({
                 className="form-control form-control-dark text-bg-dark"
                 placeholder="Search..."
                 aria-label="Search"
-                onChange={(e) => {
-                  setSearchInput(e.target.value);
-                }}
+                onChange={(e) => setSearchInput(e.target.value)}
               ></input>
             </form>
             <button
               type="button"
               className="btn btn-outline-light me-2"
-              onClick={() => setIsSearching(true)}
+              onClick={() => setIsSearching(!isSearching)}
             >
               Search
             </button>

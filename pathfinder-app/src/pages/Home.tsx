@@ -10,6 +10,7 @@ const Home = () => {
     <div>
       <Header
         setSearchInput={setSearchInput}
+        searchInput={searchInput}
         setIsSearching={setIsSearching}
         isSearching={isSearching}
       />
