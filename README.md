@@ -22,7 +22,7 @@ PathFinder is a project designed within 6 days. It consists of two separate comp
 
 ### API <a name="api"></a>
 
-The API component of PathFinder is responsible for handling requests related to path finding and navigation. It serves as the backend for the frontend application. The API is built using the .NET framework.
+The API component of PathFinder is responsible for handling requests related to path finding and navigation. It serves as the backend for the frontend application. The API is built using the .NET framework and SQLite.
 
 ### Frontend App <a name="frontend-app"></a>
 
