@@ -18,8 +18,8 @@ const Pagination: React.FC<PaginationProps> = ({
   }
 
   return (
-    <nav>
-      <ul className="pagination">
+    <div className="container d-flex justify-content-center">
+      <ul className="pagination pagination-lg">
         {pageNumbers.map((number) => (
           <li key={number} className="page-item">
             <a onClick={() => paginate(number)} href="#" className="page-link">
@@ -28,7 +28,7 @@ const Pagination: React.FC<PaginationProps> = ({
           </li>
         ))}
       </ul>
-    </nav>
+    </div>
   );
 };
 

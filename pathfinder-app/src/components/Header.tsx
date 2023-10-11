@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { Dispatch, SetStateAction } from "react";
+import { Alert } from "react-bootstrap";
+import { useState } from "react";
 
 type HeaderProps = {
   setSearchInput: Dispatch<SetStateAction<string>>;
@@ -13,48 +15,62 @@ const Header: React.FC<HeaderProps> = ({
   setIsSearching,
   isSearching,
 }) => {
+  const [variant, setVariant] = useState<string>("");
+  const [headingText, setHeadingText] = useState<string>("");
+  const [alertText, setAlertText] = useState<string>("");
+  const [showAlert, setShowAlert] = useState<boolean>(false);
+
   return (
     <main>
-      <header className="p-3 text-bg-dark">
-        <div className="container">
-          <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="30"
-              height="30"
-              fill="currentColor"
-              className="bi bi-ubuntu"
-              viewBox="0 0 16 16"
-            >
-              <path d="M2.273 9.53a2.273 2.273 0 1 0 0-4.546 2.273 2.273 0 0 0 0 4.547Zm9.467-4.984a2.273 2.273 0 1 0 0-4.546 2.273 2.273 0 0 0 0 4.546ZM7.4 13.108a5.535 5.535 0 0 1-3.775-2.88 3.273 3.273 0 0 1-1.944.24 7.4 7.4 0 0 0 5.328 4.465c.53.113 1.072.169 1.614.166a3.253 3.253 0 0 1-.666-1.9 5.639 5.639 0 0 1-.557-.091Zm3.828 2.285a2.273 2.273 0 1 0 0-4.546 2.273 2.273 0 0 0 0 4.546Zm3.163-3.108a7.436 7.436 0 0 0 .373-8.726 3.276 3.276 0 0 1-1.278 1.498 5.573 5.573 0 0 1-.183 5.535 3.26 3.26 0 0 1 1.088 1.693ZM2.098 3.998a3.28 3.28 0 0 1 1.897.486 5.544 5.544 0 0 1 4.464-2.388c.037-.67.277-1.313.69-1.843a7.472 7.472 0 0 0-7.051 3.745Z" />
-            </svg>
-
-            <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-              <li>
-                <Link to={"/"} className="nav-link px-2 text-white">
-                  Home
-                </Link>
+      <nav className="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+        <div className="container-fluid">
+          <a className="navbar-brand" href="#">
+            <img
+              className="logo-icon me-2"
+              src="src/assets/logo.png"
+              alt="logo"
+              width={50}
+              height={50}
+            />
+          </a>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarColor01"
+            aria-controls="navbarColor01"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarColor01">
+            <ul className="navbar-nav me-auto">
+              <li className="nav-item">
+                <a className="nav-link active">
+                  <Link to={"/"} className="nav-link">
+                    Home
+                  </Link>
+                </a>
               </li>
-              <li>
-                <Link
-                  to={"/Create"}
-                  className=" nav-link px-2 text-white hover:bg-cyan-700 duration-300 cursor-pointer"
-                >
-                  Register attraction
-                </Link>
+              <li className="nav-item">
+                <a className="nav-link">
+                  <Link to={"/Create"} className="nav-link">
+                    Register attraction
+                  </Link>
+                </a>
               </li>
             </ul>
             <div className="d-flex">
               <input
+                className="form-control me-sm-2"
                 type="search"
-                className="form-control form-control-dark text-bg-dark"
-                placeholder="Search..."
-                aria-label="Search"
+                placeholder="Search"
                 onChange={(e) => setSearchInput(e.target.value)}
-              ></input>
+              />
               <button
+                className="btn btn-secondary my-2 my-sm-0"
                 type="button"
-                className="btn btn-outline-light me-2"
                 onClick={() => setIsSearching(!isSearching)}
               >
                 Search
@@ -62,7 +78,20 @@ const Header: React.FC<HeaderProps> = ({
             </div>
           </div>
         </div>
-      </header>
+      </nav>
+      {showAlert && (
+        <div>
+          <div>hhahahhaha</div>
+          <Alert
+            variant={variant}
+            dismissible
+            onClose={() => setShowAlert(false)}
+          >
+            <Alert.Heading>{headingText}</Alert.Heading>
+            {alertText}
+          </Alert>
+        </div>
+      )}
     </main>
   );
 };

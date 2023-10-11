@@ -1,63 +1,44 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { api } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import { ICreateAttraction } from "../Interfaces/AttractionsInterface";
 import Header from "../components/Header";
+import { useForm } from "react-hook-form";
+import statesApi from "../services/statesApi";
 
 const Create = () => {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [location, setLocation] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
   const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ICreateAttraction>();
 
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
+  const [searchInput, setSearchInput] = useState("");
+  const [isSearching, setIsSearching] = useState<boolean>(false);
+  const [states, setStates] = useState<string[]>([]);
+
+  const fetchStates = async () => {
+    const response = await statesApi.get("/estados");
+    const data = response.data.map((state: { sigla: string }) => state.sigla);
+    setStates(data);
   };
 
-  const handleDescriptionChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setDescription(event.target.value);
-  };
-
-  const handleLocationChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setLocation(event.target.value);
-  };
-
-  const handleCityChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setCity(event.target.value);
-  };
-
-  const handleStateChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setState(event.target.value);
-  };
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const newAttraction: ICreateAttraction = {
-      name: name,
-      description: description,
-      location: location,
-      city: city,
-      state: state,
-    };
+  const handleCreateAttraction = async (data: ICreateAttraction) => {
     await api
-      .post("attractions", newAttraction)
+      .post<ICreateAttraction>("attractions", data)
       .then((response) => {
         console.log("created new attraction: " + response.data);
+        navigate("/");
       })
       .catch((error) => {
         console.log("error has occured when creating an attraction: " + error);
       });
-    navigate("/");
   };
 
-  const [searchInput, setSearchInput] = useState("");
-  const [isSearching, setIsSearching] = useState<boolean>(false);
+  useEffect(() => {
+    fetchStates();
+  }, []);
 
   return (
     <div>
@@ -67,56 +48,95 @@ const Create = () => {
         setIsSearching={setIsSearching}
         isSearching={isSearching}
       />
-      <div className="container-md">
-        <h2>Create Attraction</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label className="form-label">Name: </label>
-            <input
-              className="form-controll"
-              type="text"
-              value={name}
-              onChange={handleNameChange}
-            />
-          </div>
-          <br />
-          <div className="mb-3">
-            <label className="form-label">Description:</label>
-            <textarea
-              className="form-controll"
-              value={description}
-              onChange={handleDescriptionChange}
-            ></textarea>
-          </div>
-          <br />
-          <div className="mb-3">
-            <label className="form-label">Location:</label>
-            <textarea
-              className="form-controll"
-              value={location}
-              onChange={handleLocationChange}
-            ></textarea>
-          </div>
-          <br />
-          <div className="mb-3">
-            <label className="form-label">City:</label>
-            <textarea
-              className="form-controll"
-              value={city}
-              onChange={handleCityChange}
-            ></textarea>
-          </div>
-          <br />
-          <div className="mb-3">
-            <label className="form-label">State:</label>
-            <textarea
-              className="form-controll"
-              value={state}
-              onChange={handleStateChange}
-            ></textarea>
-          </div>
-          <br />
-          <input className="btn btn-primary" type="submit" value="Submit" />
+      <div className="container d-flex justify-content-center">
+        <form onSubmit={handleSubmit(handleCreateAttraction)}>
+          <fieldset className="align-items-center flex-column row">
+            <br />
+            <legend>Create Attraction</legend>
+            <div className="form-group has-danger">
+              <label className="form-label mt-4">Name</label>
+              <input
+                className={
+                  errors.name ? "form-control is-invalid" : "form-control"
+                }
+                placeholder="Enter name"
+                {...register("name", { required: true })}
+              />
+
+              {errors.name && (
+                <div className="invalid-feedback">Name is Required</div>
+              )}
+            </div>
+            <div className="row">
+              <div className="form-group col-md-4">
+                <label className="form-label mt-4">State</label>
+                <select
+                  className={
+                    errors.state ? "form-select is-invalid" : "form-select"
+                  }
+                  {...register("state", { required: true })}
+                >
+                  <option value="">Select State</option>
+                  {states.map((state) => (
+                    <option key={state} value={state}>
+                      {state}
+                    </option>
+                  ))}
+                </select>
+                {errors.state && (
+                  <div className="invalid-feedback">State is Required</div>
+                )}
+              </div>
+              <div className="form-group col">
+                <label className="form-label mt-4">City</label>
+                <input
+                  className={
+                    errors.city ? "form-control is-invalid" : "form-control"
+                  }
+                  placeholder="Enter City"
+                  {...register("city", { required: true })}
+                />
+                {errors.city && (
+                  <div className="invalid-feedback">City is Required</div>
+                )}
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label className="form-label mt-4">Address</label>
+              <input
+                className={
+                  errors.location ? "form-control is-invalid" : "form-control"
+                }
+                placeholder="Enter Address"
+                {...register("location", { required: true })}
+              />
+              {errors.location && (
+                <div className="invalid-feedback">Address is Required</div>
+              )}
+            </div>
+            <div className="form-group">
+              <label className="form-label mt-4">Description</label>
+              <textarea
+                className={
+                  errors.description
+                    ? "form-control is-invalid"
+                    : "form-control"
+                }
+                rows={3}
+                {...register("description", { required: true, maxLength: 100 })}
+              ></textarea>
+              {errors.description && (
+                <div className="invalid-feedback">
+                  Description is Required or is too long
+                </div>
+              )}
+            </div>
+            <br />
+            <button type="submit" className="btn btn-primary">
+              Submit
+            </button>
+          </fieldset>
         </form>
       </div>
     </div>

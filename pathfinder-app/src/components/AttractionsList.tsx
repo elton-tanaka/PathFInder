@@ -20,6 +20,10 @@ const AttractionList: React.FC<AttractionListProps> = ({
   const [openModal, setOpenModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [attractionsPerPage] = useState(4);
+  const [variant, setVariant] = useState<string>("");
+  const [headingText, setHeadingText] = useState<string>("");
+  const [alertText, setAlertText] = useState<string>("");
+  const [showAlert, setShowAlert] = useState<boolean>(true);
 
   const getAttractions = async () => {
     try {
@@ -29,6 +33,10 @@ const AttractionList: React.FC<AttractionListProps> = ({
       setAttractions(res.data);
     } catch (error) {
       setLoading(false);
+      setVariant("danger");
+      setHeadingText("Ops something went wrong!");
+      setAlertText("Check if your api is running!");
+      setShowAlert(true);
       console.error(error);
     }
   };
@@ -45,6 +53,10 @@ const AttractionList: React.FC<AttractionListProps> = ({
       setAttractions(response.data);
     } catch (error) {
       setLoading(false);
+      setVariant("danger");
+      setHeadingText("No attractions found!");
+      setAlertText("Try searching for something else!");
+      setShowAlert(true);
       console.error(error);
     }
   };
