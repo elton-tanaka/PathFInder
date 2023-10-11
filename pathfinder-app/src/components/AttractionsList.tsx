@@ -8,11 +8,19 @@ import Pagination from "./Pagination";
 type AttractionListProps = {
   searchInput: string;
   isSearching: boolean;
+  setVariant: React.Dispatch<React.SetStateAction<string>>;
+  setHeadingText: React.Dispatch<React.SetStateAction<string>>;
+  setAlertText: React.Dispatch<React.SetStateAction<string>>;
+  setShowAlert: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const AttractionList: React.FC<AttractionListProps> = ({
   searchInput,
   isSearching,
+  setVariant,
+  setHeadingText,
+  setAlertText,
+  setShowAlert,
 }) => {
   const [loading, setLoading] = useState(true);
   const [attractions, setAttractions] = useState<IAttraction[]>([]);
@@ -20,10 +28,17 @@ const AttractionList: React.FC<AttractionListProps> = ({
   const [openModal, setOpenModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [attractionsPerPage] = useState(4);
-  const [variant, setVariant] = useState<string>("");
-  const [headingText, setHeadingText] = useState<string>("");
-  const [alertText, setAlertText] = useState<string>("");
-  const [showAlert, setShowAlert] = useState<boolean>(true);
+
+  function showAlertData(
+    variant: string,
+    headingText: string,
+    alertText: string
+  ) {
+    setVariant(variant);
+    setHeadingText(headingText);
+    setAlertText(alertText);
+    setShowAlert(true);
+  }
 
   const getAttractions = async () => {
     try {
@@ -33,10 +48,11 @@ const AttractionList: React.FC<AttractionListProps> = ({
       setAttractions(res.data);
     } catch (error) {
       setLoading(false);
-      setVariant("danger");
-      setHeadingText("Ops something went wrong!");
-      setAlertText("Check if your api is running!");
-      setShowAlert(true);
+      showAlertData(
+        "danger",
+        "Ops something went wrong!",
+        "Check if your api is running!"
+      );
       console.error(error);
     }
   };
@@ -51,12 +67,21 @@ const AttractionList: React.FC<AttractionListProps> = ({
       });
       setLoading(false);
       setAttractions(response.data);
+      if (response.data.length === 0) {
+        showAlertData(
+          "danger",
+          "No attractions found!",
+          "Try searching for something else!"
+        );
+        setShowAlert(true);
+      }
     } catch (error) {
       setLoading(false);
-      setVariant("danger");
-      setHeadingText("No attractions found!");
-      setAlertText("Try searching for something else!");
-      setShowAlert(true);
+      showAlertData(
+        "danger",
+        "Ops something went wrong!",
+        "Check if your api is running!"
+      );
       console.error(error);
     }
   };
@@ -127,6 +152,10 @@ const AttractionList: React.FC<AttractionListProps> = ({
             setOpenModal(false);
           }}
           attraction={selectedAttraction}
+          setVariant={setVariant}
+          setHeadingText={setHeadingText}
+          setAlertText={setAlertText}
+          setShowAlert={setShowAlert}
         />
       )}
     </div>

@@ -17,6 +17,21 @@ const Create = () => {
   const [searchInput, setSearchInput] = useState("");
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const [states, setStates] = useState<string[]>([]);
+  const [variant, setVariant] = useState<string>("");
+  const [headingText, setHeadingText] = useState<string>("");
+  const [alertText, setAlertText] = useState<string>("");
+  const [showAlert, setShowAlert] = useState<boolean>(false);
+
+  function showAlertData(
+    variant: string,
+    headingText: string,
+    alertText: string
+  ) {
+    setVariant(variant);
+    setHeadingText(headingText);
+    setAlertText(alertText);
+    setShowAlert(true);
+  }
 
   const fetchStates = async () => {
     const response = await statesApi.get("/estados");
@@ -27,12 +42,22 @@ const Create = () => {
   const handleCreateAttraction = async (data: ICreateAttraction) => {
     await api
       .post<ICreateAttraction>("attractions", data)
-      .then((response) => {
-        console.log("created new attraction: " + response.data);
-        navigate("/");
+      .then(() => {
+        showAlertData(
+          "success",
+          "Success!",
+          "Attraction created successfully!"
+        );
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
       })
       .catch((error) => {
-        console.log("error has occured when creating an attraction: " + error);
+        showAlertData(
+          "danger",
+          "Ops something went wrong!",
+          "error has occured when creating an attraction: " + error
+        );
       });
   };
 
@@ -44,9 +69,13 @@ const Create = () => {
     <div>
       <Header
         setSearchInput={setSearchInput}
-        searchInput={searchInput}
         setIsSearching={setIsSearching}
         isSearching={isSearching}
+        variant={variant}
+        headingText={headingText}
+        alertText={alertText}
+        showAlert={showAlert}
+        setShowAlert={setShowAlert}
       />
       <div className="container d-flex justify-content-center">
         <form onSubmit={handleSubmit(handleCreateAttraction)}>

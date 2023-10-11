@@ -1,25 +1,28 @@
 import { Link } from "react-router-dom";
 import { Dispatch, SetStateAction } from "react";
 import { Alert } from "react-bootstrap";
-import { useState } from "react";
 
 type HeaderProps = {
   setSearchInput: Dispatch<SetStateAction<string>>;
-  searchInput: string;
   setIsSearching: Dispatch<SetStateAction<boolean>>;
   isSearching: boolean;
+  variant: string;
+  headingText: string;
+  alertText: string;
+  showAlert: boolean;
+  setShowAlert: Dispatch<SetStateAction<boolean>>;
 };
 
 const Header: React.FC<HeaderProps> = ({
   setSearchInput,
   setIsSearching,
   isSearching,
+  variant,
+  headingText,
+  alertText,
+  showAlert,
+  setShowAlert,
 }) => {
-  const [variant, setVariant] = useState<string>("");
-  const [headingText, setHeadingText] = useState<string>("");
-  const [alertText, setAlertText] = useState<string>("");
-  const [showAlert, setShowAlert] = useState<boolean>(false);
-
   return (
     <main>
       <nav className="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
@@ -81,7 +84,6 @@ const Header: React.FC<HeaderProps> = ({
       </nav>
       {showAlert && (
         <div>
-          <div>hhahahhaha</div>
           <Alert
             variant={variant}
             dismissible

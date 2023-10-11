@@ -5,14 +5,22 @@ import Header from "../components/Header";
 const Home = () => {
   const [searchInput, setSearchInput] = useState("");
   const [isSearching, setIsSearching] = useState<boolean>(false);
+  const [variant, setVariant] = useState<string>("");
+  const [headingText, setHeadingText] = useState<string>("");
+  const [alertText, setAlertText] = useState<string>("");
+  const [showAlert, setShowAlert] = useState<boolean>(false);
 
   return (
     <div>
       <Header
         setSearchInput={setSearchInput}
-        searchInput={searchInput}
         setIsSearching={setIsSearching}
         isSearching={isSearching}
+        variant={variant}
+        headingText={headingText}
+        alertText={alertText}
+        showAlert={showAlert}
+        setShowAlert={setShowAlert}
       />
       <div className="row">
         <div className="col-12">
@@ -24,6 +32,10 @@ const Home = () => {
           <AttractionsList
             searchInput={searchInput}
             isSearching={isSearching}
+            setVariant={setVariant}
+            setHeadingText={setHeadingText}
+            setAlertText={setAlertText}
+            setShowAlert={setShowAlert}
           />
         </div>
       </div>
